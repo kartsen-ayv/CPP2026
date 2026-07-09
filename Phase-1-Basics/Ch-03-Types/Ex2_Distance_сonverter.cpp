@@ -3,10 +3,10 @@ using std::cout, std::cin;
 
 int main()
 {
-    constexpr double dif = 1.609;
+    constexpr double dif{1.609};
 
-    double miles = 0.0, km = 0.0;
-    int choose = 0;
+    double miles{0.0}, km{0.0};
+    int choose{0};
 
     cout << "[1] miles to km\n[2] km to miles\nChoose an option: ";
     cin >> choose;

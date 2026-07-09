@@ -3,8 +3,8 @@ using std::cout, std::cin, std::string;
 
 int main()
 {
-    int count = 0;
-    string cur, pre;
+    int count{0};
+    string cur{}, pre{};
 
     while (cin >> cur)
     {

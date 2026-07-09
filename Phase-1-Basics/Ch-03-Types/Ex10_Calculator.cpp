@@ -26,7 +26,7 @@ int main()
             if (val2 != 0)
                 cout << val1 << " / " << val2 << " = " << val1 / val2 << "\n";
             else
-                cout << "You can't devine by 0!" << "\n";
+                cout << "You can't divide by 0!" << "\n";
         }
         else
         {

@@ -13,7 +13,7 @@ void print(string a, string b, string c)
          << c << "\n";
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     int a{0}, b{0}, c{0};
     cout << "Enter three numbers : ";
