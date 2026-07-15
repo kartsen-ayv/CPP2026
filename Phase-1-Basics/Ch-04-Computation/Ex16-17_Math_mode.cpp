@@ -9,8 +9,7 @@ using std::cout,
     std::random_device,
     std::default_random_engine,
     std::uniform_int_distribution,
-    std::ostream,
-    std::operator<<;
+    std::ostream;
 
 // in range [begin, end]
 int randInt(int begin = 0, int end = 1)
@@ -24,7 +23,7 @@ int randInt(int begin = 0, int end = 1)
 template <class T>
 ostream &operator<<(ostream &s, const vector<T> &vec)
 {
-    for (T val : vec)
+    for (const auto &val : vec)
     {
         s << val << " ";
     }
@@ -38,12 +37,12 @@ T sorted_vector_mode(const vector<T> &vec)
     if (vec.empty())
         return T{};
 
-    size_t i_mode = 0; // индекс моды
-    int max_count = 1, cur_count = 1;
+    size_t i_mode{0}; // индекс моды
+    int max_count{1}, cur_count{1};
 
-    for (size_t i = 0; i < vec.size() - 1; i++)
+    for (size_t i = 1; i < vec.size(); ++i)
     {
-        if (vec[i] == vec[i + 1])
+        if (vec[i] == vec[i - 1])
         {
             ++cur_count;
         }
@@ -52,14 +51,13 @@ T sorted_vector_mode(const vector<T> &vec)
             if (cur_count > max_count)
             {
                 max_count = cur_count;
-                i_mode = i;
+                i_mode = i - 1;
             }
             cur_count = 1;
         }
     }
     if (cur_count > max_count)
     {
-        max_count = cur_count;
         i_mode = vec.size() - 1;
     }
 
@@ -79,23 +77,12 @@ int main()
 
     cout << nums << "Mode: " << sorted_vector_mode(nums) << "\n";
 
-    vector<string> words = {"resink",
-                            "transversomedial",
-                            "transversomedial",
-                            "pharyngopathy",
-                            "postmineral",
-                            "postmineral",
-                            "postmineral",
-                            "myelosyphilis",
-                            "silverer",
-                            "evincement",
-                            "evincement",
-                            "phrygium",
-                            "punnigram",
-                            "imminution",
-                            "imminution",
-                            "imminution",
-                            "imminution"};
+    vector<string> words = {"resink", "transversomedial", "transversomedial",
+                            "pharyngopathy", "postmineral", "postmineral",
+                            "postmineral", "myelosyphilis", "silverer",
+                            "evincement", "evincement", "phrygium",
+                            "punnigram", "imminution", "imminution",
+                            "imminution", "imminution"};
     sort(words.begin(), words.end());
 
     cout << words << "Mode: " << sorted_vector_mode(words) << "\n";
