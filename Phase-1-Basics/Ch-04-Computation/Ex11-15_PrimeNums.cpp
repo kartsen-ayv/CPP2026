@@ -53,6 +53,56 @@ vector<int> Primes(int n)
     return primes;
 }
 
+vector<int> EratosthenesSieve(int n)
+{
+    if (n < 2)
+        return vector<int>();
+
+    // vector<char> faster than vector<bool>
+    vector<char> sieve(n + 1, 't');
+    sieve[0] = 'f';
+    sieve[1] = 'f';
+
+    // We find and remove all composite (non-prime) numbers
+    for (int p = 2; (long long)p * p <= n; p++)
+        if (sieve[p] == 't')
+            for (long long j = (long long)p * p; j <= n; j += p)
+                sieve[j] = 'f';
+
+    vector<int> primes;
+    for (size_t i = 2; i < sieve.size(); i++)
+    {
+        if (sieve[i] == 't')
+            primes.push_back((int)i);
+    }
+
+    return primes;
+}
+
+vector<int> FirstPrimes(unsigned int n)
+{
+    if (n < 1)
+        return {};
+
+    vector<int> primes = {2};
+    for (int p = 3; (unsigned int)primes.size() < n; p += 2)
+    {
+        bool is_prime = true;
+        for (int j = 3; (long long)j * j <= p; j += 2)
+        {
+            if (p % j == 0)
+            {
+                is_prime = false;
+                break;
+            }
+        }
+        if (is_prime)
+            primes.push_back(p);
+    }
+
+    return primes;
+}
+
 milliseconds howLong(function<void()> what)
 {
     auto begin = steady_clock::now();
@@ -63,12 +113,12 @@ milliseconds howLong(function<void()> what)
 
 int main()
 {
-    constexpr unsigned int N = 100;
+    constexpr unsigned int N = 100000000;
 
     int duration = howLong(
                        [&]
                        {
-                           cout << Primes(N);
+                           EratosthenesSieve(N);
                        })
                        .count();
 
