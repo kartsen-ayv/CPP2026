@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <chrono>
 #include <functional>
 
@@ -103,6 +104,36 @@ vector<int> FirstPrimes(unsigned int n)
     return primes;
 }
 
+vector<int> FirstPrimesSieve(int n)
+{
+    if (n <= 0)
+        return {};
+
+    int limit;
+    if (n < 6)
+        limit = 15;
+    else
+    {
+        double ln_n = log((double)n);
+        limit = (int)(n * (ln_n + log(ln_n))) + 3;
+    }
+
+    vector<char> sieve(limit + 1, 't');
+    sieve[0] = 'f';
+    sieve[1] = 'f';
+    for (int p = 2; (long long)p * p <= limit; p++)
+        if (sieve[p] == 't')
+            for (long long j = (long long)p * p; j <= limit; j += p)
+                sieve[j] = 'f';
+
+    vector<int> primes;
+    for (int i = 2; i <= limit && (int)primes.size() < n; i++)
+        if (sieve[i] == 't')
+            primes.push_back(i);
+
+    return primes;
+}
+
 milliseconds howLong(function<void()> what)
 {
     auto begin = steady_clock::now();
@@ -113,12 +144,15 @@ milliseconds howLong(function<void()> what)
 
 int main()
 {
-    constexpr unsigned int N = 100000000;
+    constexpr unsigned int N = 10000000;
 
     int duration = howLong(
                        [&]
                        {
-                           EratosthenesSieve(N);
+                        //    Primes(N);
+                        //    EratosthenesSieve(N);
+                        //    FirstPrimes(N);
+                           FirstPrimesSieve(N);
                        })
                        .count();
 
